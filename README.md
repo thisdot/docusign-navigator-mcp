@@ -15,7 +15,7 @@ A Model Context Protocol (MCP) server that provides secure DocuSign Navigator in
 ### Server URL
 
 ```
-SERVER_URL_TBD
+http://localhost:3000/mcp
 ```
 
 ### MCP Client Configuration
@@ -26,7 +26,7 @@ Add to your MCP client configuration:
 {
   "servers": {
     "docusign-navigator": {
-      "url": "SERVER_URL_TBD"
+      "url": "http://localhost:3000/mcp"
     }
   }
 }
@@ -95,7 +95,7 @@ Retrieve complete agreement content by ID for detailed analysis.
 1. Open Command Palette: `Ctrl+Shift+P` / `Cmd+Shift+P`
 2. Type: `mcp: add server`
 3. Select `HTTP (HTTP or Server-Sent Events)`
-4. Enter: `SERVER_URL_TBD`
+4. Enter: `http://localhost:3000/mcp`
 5. Complete OAuth authentication when prompted
 
 ### Claude Desktop
@@ -107,7 +107,7 @@ Add to your Claude Desktop configuration:
   "mcpServers": {
     "docusign-navigator": {
       "command": "mcp-server-fetch",
-      "args": ["SERVER_URL_TBD"]
+      "args": ["http://localhost:3000/mcp"]
     }
   }
 }
@@ -119,7 +119,7 @@ Add to your Claude Desktop configuration:
 {
   "servers": {
     "docusign-navigator": {
-      "url": "SERVER_URL_TBD",
+      "url": "http://localhost:3000/mcp",
       "type": "http"
     }
   }
