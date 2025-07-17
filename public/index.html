@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>DocuSign Navigator MCP Server - AI-Powered Document Management</title>
+    <meta name="title" content="DocuSign Navigator MCP Server - AI-Powered Document Management">
+    <meta name="description" content="Connect your AI assistant to DocuSign with the Navigator MCP Server. Seamlessly manage agreements, check authentication status, and retrieve contract details through natural language commands.">
+    <meta name="keywords" content="DocuSign, MCP, Model Context Protocol, AI, document management, agreements, contracts, automation, Claude, ChatGPT">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="author" content="ThisDot">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://docusign-navigator-mcp.vercel.app/">
+    <meta property="og:title" content="DocuSign Navigator MCP Server - AI-Powered Document Management">
+    <meta property="og:description" content="Connect your AI assistant to DocuSign with the Navigator MCP Server. Seamlessly manage agreements, check authentication status, and retrieve contract details through natural language commands.">
+    <meta property="og:image" content="https://docusign-navigator-mcp.vercel.app/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="DocuSign Navigator MCP">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://docusign-navigator-mcp.vercel.app/">
+    <meta property="twitter:title" content="DocuSign Navigator MCP Server - AI-Powered Document Management">
+    <meta property="twitter:description" content="Connect your AI assistant to DocuSign with the Navigator MCP Server. Seamlessly manage agreements, check authentication status, and retrieve contract details through natural language commands.">
+    <meta property="twitter:image" content="https://docusign-navigator-mcp.vercel.app/og-image.png">
+    <meta property="twitter:creator" content="@thisdot">
+    
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#A9D2F2">
+    <meta name="msapplication-TileColor" content="#A9D2F2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DocuSign Navigator MCP">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://docusign-navigator-mcp.vercel.app/">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "DocuSign Navigator MCP Server",
+      "description": "Connect your AI assistant to DocuSign with the Navigator MCP Server. Seamlessly manage agreements, check authentication status, and retrieve contract details through natural language commands.",
+      "url": "https://docusign-navigator-mcp.vercel.app/",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Any",
+      "author": {
+        "@type": "Organization",
+        "name": "ThisDot"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "DocuSign authentication status checking",
+        "Agreement retrieval and management",
+        "Contract details lookup",
+        "Natural language AI integration",
+        "Model Context Protocol support"
+      ]
+    }
+    </script>
+    <style>
+        :root {
+            --color-primary: #000;
+            --color-secondary: #A9D2F2;
+            --color-secondary-bg: rgba(169, 210, 242, 0.5);
+            --border-width: 4px;
+            --border-width-thick: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: monospace;
+            line-height: 1.4;
+            color: var(--color-primary);
+            background: var(--color-secondary-bg);
+            font-weight: bold;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .wave-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .wave-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 120%;
+            background-image:
+                repeating-linear-gradient(
+                    45deg,
+                    rgba(0, 100, 200, 0.3) 0px,
+                    rgba(50, 150, 250, 0.5) 40px,
+                    rgba(100, 200, 255, 0.4) 80px,
+                    rgba(0, 100, 200, 0.3) 120px
+                ),
+                repeating-linear-gradient(
+                    -30deg,
+                    rgba(20, 120, 220, 0.2) 0px,
+                    rgba(70, 170, 255, 0.4) 60px,
+                    rgba(120, 200, 255, 0.3) 120px,
+                    rgba(20, 120, 220, 0.2) 180px
+                ),
+                repeating-linear-gradient(
+                    60deg,
+                    rgba(40, 140, 240, 0.1) 0px,
+                    rgba(90, 180, 255, 0.3) 30px,
+                    rgba(140, 210, 255, 0.2) 60px,
+                    rgba(40, 140, 240, 0.1) 90px
+                );
+            filter: blur(1px);
+            transition: transform 0.1s ease-out;
+        }
+
+        .wave-layer:nth-child(1) {
+            transform: rotate(5deg) scale(1.1);
+        }
+
+        .wave-layer:nth-child(2) {
+            transform: rotate(-3deg) scale(1.05);
+            opacity: 0.8;
+        }
+
+        .wave-layer:nth-child(3) {
+            transform: rotate(2deg) scale(1.15);
+            opacity: 0.6;
+        }
+
+        .wave-layer:nth-child(4) {
+            transform: rotate(-1deg) scale(1.08);
+            opacity: 0.7;
+        }
+
+        @keyframes waveFloat {
+            0% {
+                transform: translateX(-150px) translateY(-60px) rotate(var(--rotation, 0deg)) scale(var(--scale, 1));
+            }
+            25% {
+                transform: translateX(-75px) translateY(-30px) rotate(var(--rotation, 0deg)) scale(var(--scale, 1));
+            }
+            50% {
+                transform: translateX(0px) translateY(0px) rotate(var(--rotation, 0deg)) scale(var(--scale, 1));
+            }
+            75% {
+                transform: translateX(75px) translateY(-15px) rotate(var(--rotation, 0deg)) scale(var(--scale, 1));
+            }
+            100% {
+                transform: translateX(150px) translateY(-45px) rotate(var(--rotation, 0deg)) scale(var(--scale, 1));
+            }
+        }
+
+        /* Additional pronounced wave overlay */
+        .wave-overlay {
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse 300px 80px at 20% 30%, rgba(0, 120, 255, 0.6) 0%, transparent 70%),
+                radial-gradient(ellipse 400px 100px at 60% 60%, rgba(50, 150, 255, 0.5) 0%, transparent 70%),
+                radial-gradient(ellipse 250px 60px at 80% 20%, rgba(100, 180, 255, 0.4) 0%, transparent 70%),
+                radial-gradient(ellipse 350px 90px at 40% 80%, rgba(20, 140, 255, 0.7) 0%, transparent 70%);
+            transition: transform 0.1s ease-out;
+        }
+
+        @keyframes waveOverlay {
+            0%, 100% {
+                transform: translateX(-90px) translateY(-30px);
+            }
+            50% {
+                transform: translateX(90px) translateY(30px);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .header {
+            margin-bottom: 80px;
+            border: var(--border-width-thick) solid var(--color-primary);
+            padding: 60px 40px;
+            background: var(--color-secondary-bg);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: clamp(2.5rem, 6vw, 6rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+            line-height: 0.9;
+        }
+
+        .header p {
+            font-size: clamp(1rem, 2.5vw, 1.8rem);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .section {
+            margin-bottom: 80px;
+            border: var(--border-width) solid var(--color-primary);
+            background: var(--color-secondary-bg);
+        }
+
+        .section-header {
+            background: var(--color-primary);
+            color: var(--color-secondary);
+            padding: 30px 40px;
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+        }
+
+        .section-content {
+            padding: 40px;
+        }
+
+        .server-url {
+            background: var(--color-primary);
+            color: var(--color-secondary);
+            padding: 30px;
+            font-family: monospace;
+            font-size: clamp(0.9rem, 2vw, 1.3rem);
+            font-weight: bold;
+            position: relative;
+            margin: 20px 0;
+            border: var(--border-width) solid var(--color-primary);
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--color-secondary);
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+            padding: 8px 16px;
+            font-family: monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .copy-btn:hover {
+            background: var(--color-primary);
+            color: var(--color-secondary);
+        }
+
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .command-block {
+            border: var(--border-width) solid var(--color-primary);
+            background: var(--color-secondary-bg);
+        }
+
+        .command-header {
+            background: var(--color-primary);
+            color: var(--color-secondary);
+            padding: 20px;
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .command-content {
+            padding: 25px;
+        }
+
+        .command-example {
+            background: var(--color-primary);
+            color: var(--color-secondary);
+            padding: 20px;
+            font-family: monospace;
+            font-size: clamp(0.8rem, 1.5vw, 1rem);
+            font-weight: bold;
+            position: relative;
+            margin: 15px 0;
+        }
+
+        .setup-steps {
+            display: grid;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .step {
+            border: var(--border-width) solid var(--color-primary);
+            background: var(--color-secondary-bg);
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .step-number {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            width: 60px;
+            height: 60px;
+            border: var(--border-width) solid var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: var(--color-primary);
+            color: var(--color-secondary);
+        }
+
+        .step-text {
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .config-block {
+            background: var(--color-primary);
+            color: var(--color-secondary);
+            padding: 25px;
+            font-family: monospace;
+            font-size: clamp(0.8rem, 1.5vw, 1rem);
+            font-weight: bold;
+            position: relative;
+            margin: 20px 0;
+            overflow-x: auto;
+            white-space: pre;
+            line-height: 1.5;
+            tab-size: 2;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            .header {
+                padding: 40px 25px;
+                margin-bottom: 60px;
+            }
+
+            .section-content {
+                padding: 30px 25px;
+            }
+
+            .commands-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .step {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .section-content {
+                padding: 25px 20px;
+            }
+
+            .section-header {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background waves -->
+    <div class="wave-container">
+        <div class="wave-layer" style="--rotation: 5deg; --scale: 1.1;"></div>
+        <div class="wave-layer" style="--rotation: -3deg; --scale: 1.05;"></div>
+        <div class="wave-layer" style="--rotation: 2deg; --scale: 1.15;"></div>
+        <div class="wave-layer" style="--rotation: -1deg; --scale: 1.08;"></div>
+        <div class="wave-overlay"></div>
+    </div>
+    <div class="container">
+        <div class="header">
+            <h1>DOCUSIGN NAVIGATOR</h1>
+            <p>MCP SERVER</p>
+        </div>
+
+        <div class="section">
+            <div class="section-header">SERVER URL</div>
+            <div class="section-content">
+                <div class="server-url">
+                    <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+                    https://docusign-navigator-mcp.vercel.app/mcp
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">COMMANDS</div>
+            <div class="section-content">
+                <div class="commands-grid">
+                    <div class="command-block">
+                        <div class="command-header">AUTH_STATUS</div>
+                        <div class="command-content">
+                            <div class="command-example">
+                                 Check my DocuSign authentication status
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-block">
+                        <div class="command-header">GET_AGREEMENTS</div>
+                        <div class="command-content">
+                            <div class="command-example">
+                                 Show me my DocuSign agreements
+                            </div>
+                            <div class="command-example">
+                                 List all my contracts
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-block">
+                        <div class="command-header">GET_AGREEMENT_BY_ID</div>
+                        <div class="command-content">
+                            <div class="command-example">
+                                Tell me about agreement [ID]
+                            </div>
+                            <div class="command-example">
+                                Show details for contract [ID]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">SETUP</div>
+            <div class="section-content">
+                <div class="setup-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-text">ADD SERVER URL TO YOUR MCP CLIENT</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-text">COMPLETE OAUTH AUTHENTICATION WHEN PROMPTED</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-text">USE COMMANDS WITH YOUR AI ASSISTANT</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">EXAMPLE CONFIGURATION</div>
+            <div class="section-content">
+                <div class="config-block">
+                    <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+{
+  "servers": {
+    "docusign-navigator": {
+      "url": "https://docusign-navigator-mcp.vercel.app/mcp"
+    }
+  }
+}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.parentElement;
+            const code = codeBlock.textContent.replace('COPY', '').trim();
+
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'COPIED!';
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = code;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+
+                button.textContent = 'COPIED!';
+                setTimeout(() => {
+                    button.textContent = 'COPY';
+                }, 2000);
+            });
+        }
+
+        // Wave animation scroll handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const waveLayers = document.querySelectorAll('.wave-layer');
+            const waveOverlay = document.querySelector('.wave-overlay');
+            let isScrolling = false;
+            let scrollTimeout;
+            let waveProgress = 0;
+            let waveSpeed = 0;
+            let targetSpeed = 0;
+            let animationFrame;
+            let lastScrollY = window.scrollY;
+
+            // Base rotations and scales for each layer
+            const baseTransforms = [
+                { rotation: 5, scale: 1.1 },
+                { rotation: -3, scale: 1.05 },
+                { rotation: 2, scale: 1.15 },
+                { rotation: -1, scale: 1.08 }
+            ];
+
+            // Function to update wave positions smoothly
+            function updateWavePositions() {
+                waveSpeed += (targetSpeed - waveSpeed) * 0.08;
+                waveProgress += waveSpeed;
+
+                waveLayers.forEach((layer, index) => {
+                    const base = baseTransforms[index];
+                    const speed = (index + 1) * 0.3; // Different speeds for each layer
+                    const x = Math.sin(waveProgress * speed * 0.01) * 80;
+                    const y = Math.cos(waveProgress * speed * 0.015) * 40;
+
+                    layer.style.transform = `rotate(${base.rotation}deg) scale(${base.scale}) translateX(${x}px) translateY(${y}px)`;
+                });
+
+                // Handle overlay movement
+                if (waveOverlay) {
+                    const overlayX = Math.sin(waveProgress * 0.008) * 60;
+                    const overlayY = Math.cos(waveProgress * 0.012) * 30;
+                    waveOverlay.style.transform = `translateX(${overlayX}px) translateY(${overlayY}px)`;
+                }
+
+                // Continue animation loop if there's movement
+                if (Math.abs(waveSpeed) > 0.01 || Math.abs(targetSpeed) > 0.01) {
+                    animationFrame = requestAnimationFrame(updateWavePositions);
+                } else {
+                    animationFrame = null;
+                }
+            }
+
+            // Function to handle wave animation during scroll
+            function handleScrollWaves() {
+                const currentScrollY = window.scrollY;
+                const scrollDelta = Math.abs(currentScrollY - lastScrollY);
+
+                // Only trigger if there's actual scroll movement
+                if (scrollDelta > 1) {
+                    if (!isScrolling) {
+                        isScrolling = true;
+                        targetSpeed = 8; // Dramatic wave speed while scrolling
+
+                        if (!animationFrame) {
+                            updateWavePositions();
+                        }
+                    }
+
+                    clearTimeout(scrollTimeout);
+
+                    scrollTimeout = setTimeout(function() {
+                        isScrolling = false;
+                        targetSpeed = 0; // Gradually slow down to stop
+
+                        if (!animationFrame) {
+                            updateWavePositions();
+                        }
+                    }, 1500); // Continue for 1.5 seconds after scrolling stops
+                }
+
+                lastScrollY = currentScrollY;
+            }
+
+            // Initialize waves with base transforms
+            waveLayers.forEach((layer, index) => {
+                const base = baseTransforms[index];
+                layer.style.transform = `rotate(${base.rotation}deg) scale(${base.scale})`;
+            });
+
+            if (waveOverlay) {
+                waveOverlay.style.transform = 'translateX(0px) translateY(0px)';
+            }
+
+            // Scroll event listener
+            window.addEventListener('scroll', handleScrollWaves, { passive: true });
+
+            // Initial subtle wave movement
+            setTimeout(() => {
+                targetSpeed = 1; // Gentle initial movement
+                updateWavePositions();
+
+                setTimeout(() => {
+                    targetSpeed = 0;
+                }, 3000);
+            }, 800);
+        });
+    </script>
+</body>
+</html>

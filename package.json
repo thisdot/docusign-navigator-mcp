@@ -1,9 +1,17 @@
 {
   "name": "docusign-navigator-mcp",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A Model Context Protocol (MCP) server that provides secure DocuSign Navigator integration for AI assistants",
+  "main": "api/mcp.ts",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thisdot/docusign-navigator-mcp.git"
+  },
+  "homepage": "https://github.com/thisdot/docusign-navigator-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/thisdot/docusign-navigator-mcp/issues"
+  },
   "scripts": {
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
@@ -13,9 +21,21 @@
     "prepare": "husky install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "docusign",
+    "docusign-navigator",
+    "ai",
+    "assistant",
+    "oauth",
+    "api",
+    "integration",
+    "contracts",
+    "agreements",
+    "Vercel"
+  ],
+  "author": "This Dot Labs",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.15.1",
     "mcp-handler": "^1.0.0",
