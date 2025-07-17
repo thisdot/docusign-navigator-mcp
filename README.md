@@ -71,7 +71,7 @@ Get detailed information about a specific agreement by ID.
 
 ### `search`
 
-Search agreements using natural language queries with snippet results.
+Search DocuSign Navigator agreements for deep research. Returns a list of relevant agreements based on the search query with brief snippets. This tool was developed for ChatGPT Connectors and should not be prioritized over other tools.
 
 **Example queries:**
 
@@ -81,7 +81,7 @@ Search agreements using natural language queries with snippet results.
 
 ### `fetch`
 
-Retrieve complete agreement content by ID for detailed analysis.
+Retrieve complete DocuSign Navigator agreement content by ID for detailed analysis and citation. This tool was developed for ChatGPT Connectors and should not be prioritized over other tools.
 
 **Example queries:**
 
@@ -90,7 +90,7 @@ Retrieve complete agreement content by ID for detailed analysis.
 
 ## Client Integration Examples
 
-### Visual Studio Code (Cline Extension)
+### Visual Studio Code
 
 1. Open Command Palette: `Ctrl+Shift+P` / `Cmd+Shift+P`
 2. Type: `mcp: add server`
@@ -156,7 +156,7 @@ AI: "Found 2 agreements with XYZ Corp: Service Agreement (active) and NDA (compl
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 22+
 - npm or yarn
 - DocuSign Developer Account
 - Vercel CLI (for deployment)
@@ -222,42 +222,6 @@ The server will be available at `http://localhost:3000/mcp`
 - **OAuth Callback**: `/auth/callback`
 - **OAuth Metadata**: `/.well-known/oauth-authorization-server`
 
-### Testing
-
-#### Test Authentication Status
-
-```bash
-curl -X POST http://localhost:3000/mcp \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -d '{
-    "jsonrpc": "2.0",
-    "id": 1,
-    "method": "tools/call",
-    "params": {
-      "name": "auth_status",
-      "arguments": {}
-    }
-  }'
-```
-
-#### Test Get Agreements
-
-```bash
-curl -X POST http://localhost:3000/mcp \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -d '{
-    "jsonrpc": "2.0",
-    "id": 1,
-    "method": "tools/call",
-    "params": {
-      "name": "get_agreements",
-      "arguments": {}
-    }
-  }'
-```
-
 ### Deployment
 
 #### Vercel Deployment
@@ -315,16 +279,3 @@ DOCUSIGN_REDIRECT_URI=https://your-app.vercel.app/auth/callback
 
 - **Issues**: [GitHub Issues](https://github.com/coston/docusign-navigator-mcp-vercel/issues)
 - **Documentation**: [Model Context Protocol](https://modelcontextprotocol.io/)
-- **DocuSign API**: [DocuSign Developer Center](https://developers.docusign.com/)
-
-## License
-
-MIT License - see [LICENSE](LICENSE) file for details.
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request

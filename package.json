@@ -36,6 +36,9 @@
     "Vercel"
   ],
   "author": "This Dot Labs",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.15.1",
     "mcp-handler": "^1.0.0",
