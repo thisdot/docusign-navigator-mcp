@@ -23,9 +23,10 @@ export function createJsonResponse(data: unknown, request: Request): Response {
   const corsHeaders = createCorsHeaders(request);
 
   return new Response(JSON.stringify(data), {
+    status: 200,
     headers: {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': corsHeaders['Access-Control-Allow-Origin'],
+      ...corsHeaders,
     },
   });
 }
