@@ -31,7 +31,7 @@ export async function GET(request: Request) {
   const origin = new URL(request.url).origin;
   const metadata = {
     resource: `${origin}/`,
-    authorization_servers: [`${origin}/.well-known/oauth-authorization-server`],
+    authorization_servers: [origin],
     scopes_supported: [
       ...oauth_integration.scopes.required,
       ...oauth_integration.scopes.optional,
