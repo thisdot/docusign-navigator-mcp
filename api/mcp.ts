@@ -23,7 +23,7 @@ const handler = createMcpHandler(
     // Get agreements tool that requires authentication
     server.tool(
       'get_agreements',
-      'Retrieve DocuSign Navigator agreements using OAuth authentication. Returns a list of all agreements available in the system with metadata like title, type, status, and parties.',
+      'Retrieve DocuSign Navigator agreements. Returns a list of all agreements available in the system with metadata like title, type, status, and parties.',
       {}, // No input parameters needed
       getAgreementsHandler
     );

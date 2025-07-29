@@ -1,5 +1,10 @@
 import { fetchAgreementById } from '../../docusign-service.js';
-import { logger } from '../../logger.js';
+import {
+  extractAccessToken,
+  createMCPErrorResponse,
+  logToolUsage,
+} from '../handler-utils.js';
+import { formatAgreementDetails } from '../../agreement-formatter.js';
 import type {
   ToolHandler,
   MCPToolResponse,
@@ -17,56 +22,51 @@ export const getAgreementByIdHandler: ToolHandler<
   { agreementId }: GetAgreementByIdInput,
   context: ToolContext
 ): Promise<MCPToolResponse> => {
-  // Log tool usage
-  logger.info(`MCP tool called: get_agreement_by_id`);
+  // Log tool usage with standardized format
+  logToolUsage('get_agreement_by_id', { agreementId }, context);
 
   try {
-    const accessToken = context.authInfo!.token;
+    const accessToken = extractAccessToken(context, 'get_agreement_by_id');
 
     // Use the existing fetchAgreementById service function
     const agreementData = await fetchAgreementById(accessToken, agreementId);
 
-    // Format the response similar to get_agreements
+    // Format the response using the standardized formatter
     const agreement: Agreement = agreementData;
+    const formatted = formatAgreementDetails(agreement);
+
     const displayText = `DocuSign Navigator Agreement Details:
 
-Title: ${agreement.title || 'No Title'}
-ID: ${agreement.id}
-Type: ${agreement.type || 'Unknown'}
-Category: ${agreement.category || 'Unknown'}
-Status: ${agreement.status || 'Unknown'}
-File: ${agreement.file_name || 'Unknown'}${
-      agreement.parties && agreement.parties.length > 0
+Title: ${formatted.title}
+ID: ${formatted.id}
+Type: ${formatted.type}
+Category: ${formatted.category}
+Status: ${formatted.status}
+File: ${formatted.fileName}
+Parties: ${formatted.parties.map(p => p.displayName).join(', ')}${
+      formatted.provisions.hasEffectiveDate
         ? `
-Parties: ${agreement.parties
-            .map(p => p.preferred_name || p.name_in_agreement)
-            .filter(Boolean)
-            .join(', ')}`
+Effective Date: ${new Date(formatted.provisions.effectiveDate).toLocaleDateString()}`
         : ''
     }${
-      agreement.provisions?.effective_date
+      formatted.provisions.hasExpirationDate
         ? `
-Effective Date: ${new Date(agreement.provisions.effective_date).toLocaleDateString()}`
+Expiration Date: ${new Date(formatted.provisions.expirationDate).toLocaleDateString()}`
         : ''
     }${
-      agreement.provisions?.expiration_date
+      formatted.provisions.hasTotalValue
         ? `
-Expiration Date: ${new Date(agreement.provisions.expiration_date).toLocaleDateString()}`
+Total Value: ${formatted.provisions.totalValue}`
         : ''
     }${
-      agreement.provisions?.total_agreement_value
+      formatted.summary !== 'No summary available'
         ? `
-Total Value: ${agreement.provisions.total_agreement_value}`
+Summary: ${formatted.summary}`
         : ''
     }${
-      agreement.summary
+      formatted.metadata.hasCreatedAt
         ? `
-Summary: ${agreement.summary}`
-        : ''
-    }${
-      agreement.metadata?.created_at
-        ? `
-Created: ${new Date(agreement.metadata.created_at).toLocaleString()}`
+Created: ${new Date(formatted.metadata.createdAt).toLocaleString()}`
         : ''
     }`;
 
@@ -84,20 +84,12 @@ Created: ${new Date(agreement.metadata.created_at).toLocaleString()}`
       ],
     };
   } catch (error) {
-    logger.error('Failed to retrieve agreement by ID', error as Error, {
-      tool: 'get_agreement_by_id',
-      agreementId,
-    });
-
     const errorMessage = error instanceof Error ? error.message : String(error);
-
-    return {
-      content: [
-        {
-          type: 'text',
-          text: `Error retrieving agreement: ${errorMessage}`,
-        },
-      ],
-    };
+    return createMCPErrorResponse(
+      'fetch_failed',
+      `Failed to retrieve agreement: ${errorMessage}`,
+      'get_agreement_by_id',
+      { agreementId }
+    );
   }
 };

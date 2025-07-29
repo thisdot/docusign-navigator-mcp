@@ -1,4 +1,9 @@
 import { createOptionsResponse } from '../../lib/cors-helper.js';
+import {
+  createOAuthErrorResponse,
+  createOAuthRedirectResponse,
+} from '../../lib/oauth-response-utils.js';
+import { config } from '../../lib/config.js';
 
 interface MCPClientInfo {
   client_id: string;
@@ -8,6 +13,78 @@ interface MCPClientInfo {
   code_challenge_method: string;
   resource?: string;
   timestamp: number;
+}
+
+/**
+ * Decodes and validates state parameter
+ */
+function decodeStateParameter(state: string): MCPClientInfo | null {
+  try {
+    return JSON.parse(atob(decodeURIComponent(state))) as MCPClientInfo;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Validates state timestamp to prevent replay attacks
+ */
+function validateStateTimestamp(mcpClientInfo: MCPClientInfo): boolean {
+  return (
+    Date.now() - mcpClientInfo.timestamp <= config.security.stateExpirationMs
+  );
+}
+
+/**
+ * Handles DocuSign error responses by redirecting to original client
+ */
+function handleDocuSignError(
+  error: string,
+  errorDescription: string | null,
+  state: string | null
+): Response {
+  if (!state) {
+    return createOAuthErrorResponse(
+      error,
+      errorDescription || 'Authorization failed'
+    );
+  }
+
+  const mcpClientInfo = decodeStateParameter(state);
+  if (!mcpClientInfo) {
+    return createOAuthErrorResponse(
+      error,
+      errorDescription || 'Authorization failed'
+    );
+  }
+
+  // Build error redirect parameters
+  const errorParams: Record<string, string> = { error };
+  if (errorDescription) errorParams.error_description = errorDescription;
+  if (mcpClientInfo.original_state)
+    errorParams.state = mcpClientInfo.original_state;
+
+  return createOAuthRedirectResponse(mcpClientInfo.redirect_uri, errorParams);
+}
+
+/**
+ * Builds success redirect URL with authorization code
+ */
+function buildSuccessRedirect(
+  code: string,
+  mcpClientInfo: MCPClientInfo
+): Response {
+  const redirectParams: Record<string, string> = { code };
+
+  // Include original state if it existed
+  if (mcpClientInfo.original_state) {
+    redirectParams.state = mcpClientInfo.original_state;
+  }
+
+  return createOAuthRedirectResponse(
+    mcpClientInfo.redirect_uri,
+    redirectParams
+  );
 }
 
 export async function GET(request: Request): Promise<Response> {
@@ -22,143 +99,41 @@ export async function GET(request: Request): Promise<Response> {
 
     // Handle error response from DocuSign
     if (error) {
-      // If we have state, try to decode it and redirect to original client
-      if (state) {
-        try {
-          const decodedState = JSON.parse(
-            atob(decodeURIComponent(state))
-          ) as MCPClientInfo;
-          const errorUrl = new URL(decodedState.redirect_uri);
-          errorUrl.searchParams.set('error', error);
-          if (errorDescription) {
-            errorUrl.searchParams.set('error_description', errorDescription);
-          }
-          if (decodedState.original_state) {
-            errorUrl.searchParams.set('state', decodedState.original_state);
-          }
-
-          return new Response(null, {
-            status: 302,
-            headers: {
-              Location: errorUrl.toString(),
-              'Cache-Control': 'no-store',
-              Pragma: 'no-cache',
-            },
-          });
-        } catch (e) {
-          // Continue to fallback error response
-        }
-      }
-
-      // Fallback error response
-      return new Response(
-        JSON.stringify({
-          error,
-          error_description: errorDescription || 'Authorization failed',
-        }),
-        {
-          status: 400,
-          headers: {
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-store',
-            Pragma: 'no-cache',
-          },
-        }
-      );
+      return handleDocuSignError(error, errorDescription, state);
     }
 
     // Validate required parameters
     if (!code || !state) {
-      return new Response(
-        JSON.stringify({
-          error: 'invalid_request',
-          error_description: 'Missing required parameters (code or state)',
-        }),
-        {
-          status: 400,
-          headers: {
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-store',
-            Pragma: 'no-cache',
-          },
-        }
+      return createOAuthErrorResponse(
+        'invalid_request',
+        'Missing required parameters (code or state)'
       );
     }
 
     // Decode the MCP client information from state
-    let mcpClientInfo: MCPClientInfo;
-    try {
-      mcpClientInfo = JSON.parse(
-        atob(decodeURIComponent(state))
-      ) as MCPClientInfo;
-    } catch (e) {
-      return new Response(
-        JSON.stringify({
-          error: 'invalid_request',
-          error_description: 'Invalid state parameter',
-        }),
-        {
-          status: 400,
-          headers: {
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-store',
-            Pragma: 'no-cache',
-          },
-        }
+    const mcpClientInfo = decodeStateParameter(state);
+    if (!mcpClientInfo) {
+      return createOAuthErrorResponse(
+        'invalid_request',
+        'Invalid state parameter'
       );
     }
 
     // Validate timestamp (prevent replay attacks)
-    const maxAge = 10 * 60 * 1000; // 10 minutes
-    if (Date.now() - mcpClientInfo.timestamp > maxAge) {
-      return new Response(
-        JSON.stringify({
-          error: 'invalid_request',
-          error_description: 'State parameter has expired',
-        }),
-        {
-          status: 400,
-          headers: {
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-store',
-            Pragma: 'no-cache',
-          },
-        }
+    if (!validateStateTimestamp(mcpClientInfo)) {
+      return createOAuthErrorResponse(
+        'invalid_request',
+        'State parameter has expired'
       );
     }
 
-    // Build redirect URL back to MCP client
-    const redirectUrl = new URL(mcpClientInfo.redirect_uri);
-    redirectUrl.searchParams.set('code', code);
-
-    // Include original state if it existed
-    if (mcpClientInfo.original_state) {
-      redirectUrl.searchParams.set('state', mcpClientInfo.original_state);
-    }
-
-    // Redirect back to the MCP client
-    return new Response(null, {
-      status: 302,
-      headers: {
-        Location: redirectUrl.toString(),
-        'Cache-Control': 'no-store',
-        Pragma: 'no-cache',
-      },
-    });
+    // Build success redirect back to MCP client
+    return buildSuccessRedirect(code, mcpClientInfo);
   } catch (error) {
-    return new Response(
-      JSON.stringify({
-        error: 'server_error',
-        error_description: 'Internal server error processing callback',
-      }),
-      {
-        status: 500,
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'no-store',
-          Pragma: 'no-cache',
-        },
-      }
+    return createOAuthErrorResponse(
+      'server_error',
+      'Internal server error processing callback',
+      500
     );
   }
 }

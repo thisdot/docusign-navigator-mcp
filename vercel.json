@@ -1,40 +1,20 @@
 {
   "rewrites": [
     {
-      "source": "/health",
-      "destination": "/api/health"
+      "source": "/.well-known/:path*",
+      "destination": "/api/well-known/:path*"
     },
     {
-      "source": "/.well-known/oauth-authorization-server",
-      "destination": "/api/well-known/oauth-authorization-server"
+      "source": "/(register|authorize|token)",
+      "destination": "/api/auth/$1"
     },
     {
-      "source": "/.well-known/oauth-protected-resource",
-      "destination": "/api/well-known/oauth-protected-resource"
+      "source": "/auth/:path*",
+      "destination": "/api/auth/:path*"
     },
     {
-      "source": "/register",
-      "destination": "/api/auth/register"
-    },
-    {
-      "source": "/authorize",
-      "destination": "/api/auth/authorize"
-    },
-    {
-      "source": "/token",
-      "destination": "/api/auth/token"
-    },
-    {
-      "source": "/auth/callback",
-      "destination": "/api/auth/callback"
-    },
-    {
-      "source": "/.well-known/ai-plugin.json",
-      "destination": "/.well-known/ai-plugin.json"
-    },
-    {
-      "source": "/mcp",
-      "destination": "/api/mcp"
+      "source": "/(health|mcp)",
+      "destination": "/api/$1"
     },
     {
       "source": "/(.*)",
@@ -44,27 +24,6 @@
   "functions": {
     "api/mcp.ts": {
       "maxDuration": 60
-    },
-    "api/health.ts": {
-      "maxDuration": 10
-    },
-    "api/well-known/oauth-authorization-server.ts": {
-      "maxDuration": 10
-    },
-    "api/well-known/oauth-protected-resource.ts": {
-      "maxDuration": 10
-    },
-    "api/auth/register.ts": {
-      "maxDuration": 10
-    },
-    "api/auth/authorize.ts": {
-      "maxDuration": 10
-    },
-    "api/auth/token.ts": {
-      "maxDuration": 10
-    },
-    "api/auth/callback.ts": {
-      "maxDuration": 10
     }
   }
 }

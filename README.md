@@ -277,5 +277,5 @@ DOCUSIGN_REDIRECT_URI=https://your-app.vercel.app/auth/callback
 
 ### Support
 
-- **Issues**: [GitHub Issues](https://github.com/coston/docusign-navigator-mcp-vercel/issues)
+- **Issues**: [GitHub Issues](https://github.com/thisdot/docusign-navigator-mcp/issues)
 - **Documentation**: [Model Context Protocol](https://modelcontextprotocol.io/)
