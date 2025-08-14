@@ -30,7 +30,7 @@ export async function GET(request: Request) {
 
   const origin = new URL(request.url).origin;
   const metadata = {
-    resource: `${origin}/`,
+    resource: `${origin}/mcp`,
     authorization_servers: [origin],
     scopes_supported: [
       ...oauth_integration.scopes.required,

@@ -10,6 +10,25 @@ A Model Context Protocol (MCP) server that provides secure DocuSign Navigator in
 - **MCP Protocol Compliance**: Full compatibility with Model Context Protocol standards
 - **Real-time Data Access**: Live connection to DocuSign Navigator for up-to-date information
 
+## Routes
+
+API Routes
+├── Health & Monitoring
+│ └── GET /health
+│
+├── OAuth 2.0 Discovery (.well-known)
+│ ├── GET /.well-known/oauth-authorization-server
+│ └── GET /.well-known/oauth-protected-resource
+│
+├── OAuth 2.0 Flow
+│ ├── GET/POST /register
+│ ├── GET /authorize
+│ ├── POST /token
+│ └── GET /auth/callback
+│
+└── MCP (Model Context Protocol)
+└── POST /mcp Main endpoint
+
 ## Quick Start
 
 ### Server URL
