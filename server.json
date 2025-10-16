@@ -1,0 +1,17 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
+  "name": "io.github.thisdot/docusign-navigator-mcp",
+  "description": "Secure DocuSign Navigator integration for AI assistants to access and analyze agreement data.",
+  "version": "1.0.0",
+  "websiteUrl": "https://github.com/thisdot/docusign-navigator-mcp#readme",
+  "repository": {
+    "url": "https://github.com/thisdot/docusign-navigator-mcp",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://docusign-navigator-mcp.vercel.app/mcp"
+    }
+  ]
+}

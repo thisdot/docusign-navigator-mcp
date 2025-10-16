@@ -12,22 +12,24 @@ A Model Context Protocol (MCP) server that provides secure DocuSign Navigator in
 
 ## Routes
 
+```
 API Routes
 ├── Health & Monitoring
-│ └── GET /health
+│   └── GET /health
 │
 ├── OAuth 2.0 Discovery (.well-known)
-│ ├── GET /.well-known/oauth-authorization-server
-│ └── GET /.well-known/oauth-protected-resource
+│   ├── GET /.well-known/oauth-authorization-server
+│   └── GET /.well-known/oauth-protected-resource
 │
 ├── OAuth 2.0 Flow
-│ ├── GET/POST /register
-│ ├── GET /authorize
-│ ├── POST /token
-│ └── GET /auth/callback
+│   ├── GET/POST /register
+│   ├── GET /authorize
+│   ├── POST /token
+│   └── GET /auth/callback
 │
 └── MCP (Model Context Protocol)
-└── POST /mcp Main endpoint
+    └── POST /mcp (Main endpoint)
+```
 
 ## Quick Start
 
@@ -263,6 +265,10 @@ DOCUSIGN_AUTH_SERVER=https://account-d.docusign.com
 DOCUSIGN_REDIRECT_URI=https://your-app.vercel.app/auth/callback
 # Note: BASE_URL should be empty in production (Vercel sets VERCEL_URL automatically)
 ```
+
+### Publishing to MCP Registry
+
+This server is published to the [MCP Registry](https://github.com/modelcontextprotocol/registry) for easy discovery. Publishing happens automatically via GitHub Actions when you create a version tag (e.g., `git tag v1.0.0 && git push origin --tags`) or can be triggered manually from the Actions tab. The server is configured in [server.json](server.json) as a remote server pointing to the live Vercel deployment.
 
 ## Architecture
 
