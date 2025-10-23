@@ -7,7 +7,6 @@ on:
   workflow_dispatch:
 
 permissions:
-  id-token: write
   contents: read
 
 jobs:
@@ -37,7 +36,10 @@ jobs:
           curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz" | tar xz mcp-publisher
 
       - name: Login to MCP Registry
-        run: ./mcp-publisher login github-oidc
+        run: |
+          echo "${{ secrets.MCP_PRIVATE_KEY }}" > mcp-dns-key.pem
+          ./mcp-publisher login dns --domain docusign-navigator.thisdot.co --private-key-file mcp-dns-key.pem
+          rm mcp-dns-key.pem
 
       - name: Publish to MCP Registry
         run: ./mcp-publisher publish
