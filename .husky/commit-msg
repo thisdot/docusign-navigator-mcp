@@ -1,0 +1,50 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Conventional Commits validation
+# Validates commit message format according to conventional commits specification
+# Format: <type>(<optional scope>): <description>
+# Types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
+
+commit_msg_file=$1
+commit_msg=$(cat "$commit_msg_file")
+
+# Conventional commit regex pattern (default settings)
+# Matches: type(optional-scope): description
+# Allows: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
+# Allows breaking changes: type!: or type(scope)!:
+conventional_commit_regex='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?(!)?: .{1,}'
+
+# Check if commit message matches conventional commit format
+if ! echo "$commit_msg" | grep -Eq "$conventional_commit_regex"; then
+  echo ""
+  echo "❌ Invalid commit message format"
+  echo ""
+  echo "Commit message must follow Conventional Commits specification:"
+  echo ""
+  echo "  <type>[optional scope][!]: <description>"
+  echo ""
+  echo "  [optional body]"
+  echo ""
+  echo "  [optional footer(s)]"
+  echo ""
+  echo "Types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert"
+  echo ""
+  echo "Examples:"
+  echo "  feat: add user authentication"
+  echo "  fix(api): resolve timeout issue"
+  echo "  feat!: redesign API (breaking change)"
+  echo "  docs: update README with setup instructions"
+  echo ""
+  echo "Your commit message:"
+  echo "  $commit_msg"
+  echo ""
+  exit 1
+fi
+
+# Check for WIP commits (optional - can be disabled)
+if echo "$commit_msg" | grep -Eqi '^(wip|todo|fixme)'; then
+  echo ""
+  echo "⚠️  Warning: WIP commit detected"
+  echo ""
+fi
