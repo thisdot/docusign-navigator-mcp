@@ -34,37 +34,15 @@ jobs:
 
       - name: Install MCP Publisher
         run: |
-          URL="https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz"
-          echo "Downloading MCP Publisher from: $URL"
+          OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+          ARCH=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
 
-          # Download with failure handling
-          if ! curl -fL "$URL" -o mcp-publisher.tar.gz; then
-            echo "Failed to download MCP Publisher"
-            exit 1
-          fi
+          RELEASE_TAG=$(curl -s https://api.github.com/repos/modelcontextprotocol/registry/releases | \
+            jq -r '.[] | select(.assets | map(.name) | any(test("mcp-publisher_"))) | .tag_name' | head -1)
 
-          # Verify the downloaded file is a valid gzip archive
-          if ! file mcp-publisher.tar.gz | grep -q 'gzip compressed'; then
-            echo "Downloaded file is not a valid gzip archive"
-            echo "File type: $(file mcp-publisher.tar.gz)"
-            echo "File contents:"
-            cat mcp-publisher.tar.gz
-            exit 1
-          fi
-
-          # Extract the archive
-          tar xzf mcp-publisher.tar.gz
-
-          # Verify the binary was extracted successfully
-          if [ ! -f mcp-publisher ]; then
-            echo "mcp-publisher binary not found after extraction"
-            exit 1
-          fi
-
-          # Make it executable
+          echo "Downloading mcp-publisher ${RELEASE_TAG} for ${OS}_${ARCH}"
+          curl -fL "https://github.com/modelcontextprotocol/registry/releases/download/${RELEASE_TAG}/mcp-publisher_${OS}_${ARCH}.tar.gz" | tar xz
           chmod +x mcp-publisher
-
-          echo "MCP Publisher installed successfully"
 
       - name: Login to MCP Registry
         run: ./mcp-publisher login github-oidc
