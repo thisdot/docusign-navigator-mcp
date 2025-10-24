@@ -1,4 +1,4 @@
-# DocuSign Navigator MCP Server
+# Docusign Navigator MCP Server
 
 <div align="center">
   <img src="docs/images/thisdot-labs-logo.png" alt="This Dot Labs" width="200"/>
@@ -9,15 +9,15 @@
 
 <br/>
 
-A Model Context Protocol (MCP) server that provides secure DocuSign Navigator integration for AI assistants. Connect your AI tools to access and analyze DocuSign agreement data using natural language queries.
+A Model Context Protocol (MCP) server that provides secure Docusign Navigator integration for AI assistants. Connect your AI tools to access and analyze Docusign agreement data using natural language queries.
 
 ## Features
 
-- **Secure OAuth 2.0 Authentication**: Complete DocuSign OAuth flow with PKCE support
-- **DocuSign Navigator Integration**: Access comprehensive agreement data and metadata
+- **Secure OAuth 2.0 Authentication**: Complete Docusign OAuth flow with PKCE support
+- **Docusign Navigator Integration**: Access comprehensive agreement data and metadata
 - **Natural Language Queries**: Search and retrieve agreements using conversational AI
 - **MCP Protocol Compliance**: Full compatibility with Model Context Protocol standards
-- **Real-time Data Access**: Live connection to DocuSign Navigator for up-to-date information
+- **Real-time Data Access**: Live connection to Docusign Navigator for up-to-date information
 
 ## Routes
 

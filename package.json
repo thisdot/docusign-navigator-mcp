@@ -1,7 +1,7 @@
 {
   "name": "docusign-navigator-mcp",
   "version": "1.0.2",
-  "description": "A Model Context Protocol (MCP) server that provides secure DocuSign Navigator integration for AI assistants. By This Dot Labs.",
+  "description": "A Model Context Protocol (MCP) server that provides secure Docusign Navigator integration for AI assistants. By This Dot Labs.",
   "main": "api/mcp.ts",
   "type": "module",
   "repository": {
