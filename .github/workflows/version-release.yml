@@ -12,6 +12,9 @@ permissions:
 jobs:
   version:
     runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.changed.outputs.changed }}
+      version: ${{ steps.version.outputs.version }}
 
     steps:
       - name: Checkout code
@@ -85,3 +88,48 @@ jobs:
             --notes "## Changes
 
           $COMMITS"
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: version
+    if: needs.version.outputs.changed == 'true'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          ref: v${{ needs.version.outputs.version }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 'lts/*'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run type check
+        run: npm run type-check
+
+      - name: Install MCP Publisher
+        run: |
+          OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+          ARCH=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
+
+          RELEASE_TAG=$(curl -s https://api.github.com/repos/modelcontextprotocol/registry/releases | \
+            jq -r '.[] | select(.assets | map(.name) | any(test("mcp-publisher_"))) | .tag_name' | head -1)
+
+          echo "Downloading mcp-publisher ${RELEASE_TAG} for ${OS}_${ARCH}"
+          curl -fL "https://github.com/modelcontextprotocol/registry/releases/download/${RELEASE_TAG}/mcp-publisher_${OS}_${ARCH}.tar.gz" | tar xz
+          chmod +x mcp-publisher
+
+      - name: Login to MCP Registry
+        env:
+          MCP_PRIVATE_KEY: ${{ secrets.MCP_PRIVATE_KEY }}
+        run: ./mcp-publisher login dns --domain docusign-navigator.thisdot.co --private-key "$MCP_PRIVATE_KEY"
+
+      - name: Publish to MCP Registry
+        run: ./mcp-publisher publish
