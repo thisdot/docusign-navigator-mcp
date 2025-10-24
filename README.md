@@ -9,307 +9,158 @@
 
 <br/>
 
-A Model Context Protocol (MCP) server that provides secure Docusign Navigator integration for AI assistants. Connect your AI tools to access and analyze Docusign agreement data using natural language queries.
+A Model Context Protocol (MCP) server that connects your AI assistant to Docusign Navigator. Query and analyze your Docusign agreements using natural language - no complex APIs or manual searches required.
 
-## Features
+## Why Use This?
 
-- **Secure OAuth 2.0 Authentication**: Complete Docusign OAuth flow with PKCE support
-- **Docusign Navigator Integration**: Access comprehensive agreement data and metadata
-- **Natural Language Queries**: Search and retrieve agreements using conversational AI
-- **MCP Protocol Compliance**: Full compatibility with Model Context Protocol standards
-- **Real-time Data Access**: Live connection to Docusign Navigator for up-to-date information
+Transform how you work with Docusign agreements:
 
-## Routes
+- **Natural Language Access**: Ask questions like "Show me my pending contracts" or "Find agreements with XYZ Corp"
+- **AI-Powered Insights**: Let your AI assistant analyze agreement details, statuses, and metadata
+- **Secure Connection**: OAuth 2.0 authentication keeps your Docusign data safe
+- **No Code Required**: Works directly with compatible AI tools like Claude Desktop and VS Code
 
-```
-API Routes
-├── Health & Monitoring
-│   └── GET /health
-│
-├── OAuth 2.0 Discovery (.well-known)
-│   ├── GET /.well-known/oauth-authorization-server
-│   └── GET /.well-known/oauth-protected-resource
-│
-├── OAuth 2.0 Flow
-│   ├── GET/POST /register
-│   ├── GET /authorize
-│   ├── POST /token
-│   └── GET /auth/callback
-│
-└── MCP (Model Context Protocol)
-    └── POST /mcp (Main endpoint)
-```
+## What You Need
 
-## Quick Start
+- Active Docusign account with Navigator access
+- Compatible AI client (Claude Desktop, VS Code with MCP extension, etc.)
+- Internet connection
 
-### Server URL
+## Getting Started
 
-```
-http://localhost:3000/mcp
-```
+### 1. Add to Your AI Client
 
-### MCP Client Configuration
+The server is deployed and ready to use at: **`https://docusign-navigator.thisdot.co/mcp`**
 
-Add to your MCP client configuration:
+Choose your AI client below:
 
-```json
-{
-  "servers": {
-    "docusign-navigator": {
-      "url": "http://localhost:3000/mcp"
-    }
-  }
-}
-```
+#### Claude Desktop
 
-### Setup Steps
-
-1. **Add Server**: Configure the MCP server URL in your AI client
-2. **Authenticate**: Complete OAuth flow when prompted to connect your Docusign account
-3. **Start Querying**: Use natural language to interact with your Docusign data
-
-## Available Tools
-
-### `auth_status`
-
-Check your Docusign authentication status and user information.
-
-**Example queries:**
-
-- "Check my Docusign authentication status"
-- "Am I connected to Docusign?"
-
-### `get_agreements`
-
-Retrieve all Docusign Navigator agreements with comprehensive metadata.
-
-**Example queries:**
-
-- "Show me my Docusign agreements"
-- "List all my contracts"
-- "What agreements do I have?"
-
-### `get_agreement_by_id`
-
-Get detailed information about a specific agreement by ID.
-
-**Example queries:**
-
-- "Tell me about agreement [ID]"
-- "Show details for contract [ID]"
-- "Get agreement information for [ID]"
-
-### `search`
-
-Search Docusign Navigator agreements for deep research. Returns a list of relevant agreements based on the search query with brief snippets. This tool was developed for ChatGPT Connectors and should not be prioritized over other tools.
-
-**Example queries:**
-
-- "Find service agreements"
-- "Search for contracts with company ABC"
-- "Show me expired agreements"
-
-### `fetch`
-
-Retrieve complete Docusign Navigator agreement content by ID for detailed analysis and citation. This tool was developed for ChatGPT Connectors and should not be prioritized over other tools.
-
-**Example queries:**
-
-- "Get full content for agreement [ID]"
-- "Fetch complete details for contract [ID]"
-
-## Client Integration Examples
-
-### Visual Studio Code
-
-1. Open Command Palette: `Ctrl+Shift+P` / `Cmd+Shift+P`
-2. Type: `mcp: add server`
-3. Select `HTTP (HTTP or Server-Sent Events)`
-4. Enter: `http://localhost:3000/mcp`
-5. Complete OAuth authentication when prompted
-
-### Claude Desktop
-
-Add to your Claude Desktop configuration:
+Add this to your Claude Desktop configuration file:
 
 ```json
 {
   "mcpServers": {
     "docusign-navigator": {
       "command": "mcp-server-fetch",
-      "args": ["http://localhost:3000/mcp"]
+      "args": ["https://docusign-navigator.thisdot.co/mcp"]
     }
   }
 }
 ```
 
-### Generic MCP Client
+#### Visual Studio Code
+
+1. Open Command Palette: `Ctrl+Shift+P` / `Cmd+Shift+P`
+2. Type: `mcp: add server`
+3. Select `HTTP (HTTP or Server-Sent Events)`
+4. Enter: `https://docusign-navigator.thisdot.co/mcp`
+
+#### Other MCP Clients
+
+Add to your configuration:
 
 ```json
 {
   "servers": {
     "docusign-navigator": {
-      "url": "http://localhost:3000/mcp",
+      "url": "https://docusign-navigator.thisdot.co/mcp",
       "type": "http"
     }
   }
 }
 ```
 
-## Usage Examples
+### 2. Connect Your Docusign Account
+
+When you first use a Docusign command, you'll be prompted to authenticate:
+
+1. Your AI client will provide an authorization link
+2. Click the link to sign in to Docusign
+3. Authorize the connection
+4. Return to your AI client - you're ready to go!
+
+### 3. Start Using Natural Language
+
+Try these example queries with your AI assistant:
 
 ```
-User: "Show me my Docusign agreements"
-AI: "You have 3 agreements: Contract A (pending), Contract B (completed), Contract C (in review)"
-
-User: "Tell me about Contract A"
-AI: "Contract A is a service agreement created on Jan 15th, currently pending signature"
-
-User: "Search for agreements with XYZ Corp"
-AI: "Found 2 agreements with XYZ Corp: Service Agreement (active) and NDA (completed)"
+"Show me my Docusign agreements"
+"Tell me about agreement [ID]"
+"Find contracts with ABC Company"
+"What agreements are pending signature?"
 ```
 
-## Requirements
+## What You Can Do
 
-- **Docusign Account**: Active Docusign account with Navigator access
-- **MCP Client**: Compatible AI client that supports Model Context Protocol
-- **Internet Connection**: Required for OAuth authentication and API calls
+Your AI assistant will have access to these capabilities:
+
+### Check Authentication
+
+"Am I connected to Docusign?"
+"Check my authentication status"
+
+### List Agreements
+
+"Show me all my agreements"
+"What contracts do I have?"
+"List my Docusign documents"
+
+### Get Agreement Details
+
+"Tell me about agreement [ID]"
+"Show me details for contract [ID]"
+
+### Search Agreements
+
+"Find service agreements"
+"Search for contracts with ABC Company"
+"Show me expired agreements"
+
+## Example Conversation
+
+```
+You: "Show me my Docusign agreements"
+AI: "You have 3 agreements:
+     • Service Agreement with XYZ Corp (pending signature)
+     • NDA with ABC Inc (completed)
+     • Consulting Contract (in review)"
+
+You: "Tell me more about the Service Agreement"
+AI: "The Service Agreement with XYZ Corp was created on January 15th
+     and is currently pending signature. It includes standard service
+     terms and payment schedules."
+```
 
 ## Security & Privacy
 
-- **OAuth 2.0**: Secure authentication with PKCE support
-- **Token Management**: Secure handling of access tokens
-- **No Data Storage**: No agreement data is stored on our servers
-- **Real-time Access**: Direct API calls to Docusign Navigator
+Your data stays secure:
 
-## Development
-
-### Prerequisites
-
-- Node.js 22+
-- npm or yarn
-- Docusign Developer Account
-- Vercel CLI (for deployment)
-
-### Environment Setup
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/coston/docusign-navigator-mcp-vercel
-cd docusign-navigator-mcp-vercel
-```
-
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-3. Configure environment variables:
-
-```bash
-cp .env.example .env
-```
-
-4. Update `.env` with your Docusign credentials:
-
-```bash
-DOCUSIGN_INTEGRATION_KEY=your_integration_key
-DOCUSIGN_SECRET_KEY=your_secret_key
-DOCUSIGN_AUTH_SERVER=https://account-d.docusign.com
-DOCUSIGN_REDIRECT_URI=http://localhost:3000/auth/callback
-BASE_URL=http://localhost:3000
-```
-
-### Docusign Application Setup
-
-1. Create a Docusign Developer account at [developers.docusign.com](https://developers.docusign.com/)
-2. Create a new application in the Docusign Admin panel
-3. Configure OAuth redirect URIs:
-   - Development: `http://localhost:3000/auth/callback`
-   - Production: `https://your-domain.vercel.app/auth/callback`
-4. Copy Integration Key and Secret Key to environment variables
-
-### Local Development
-
-```bash
-# Start development server
-npm run dev
-
-# Or using Vercel CLI
-vercel dev
-```
-
-The server will be available at `http://localhost:3000/mcp`
-
-### API Endpoints
-
-- **Health Check**: `/health`
-- **MCP Server**: `/mcp`
-- **OAuth Authorization**: `/authorize`
-- **OAuth Token**: `/token`
-- **OAuth Callback**: `/auth/callback`
-- **OAuth Metadata**: `/.well-known/oauth-authorization-server`
-
-### Deployment
-
-#### Vercel Deployment
-
-1. Connect your GitHub repository to Vercel
-2. Configure environment variables in Vercel dashboard:
-   - `DOCUSIGN_INTEGRATION_KEY`
-   - `DOCUSIGN_SECRET_KEY`
-   - `DOCUSIGN_AUTH_SERVER`
-   - `DOCUSIGN_REDIRECT_URI` (update to your Vercel URL)
-3. Deploy the application
-4. Update Docusign app redirect URIs to include your Vercel URL
-
-#### Environment Variables for Production
-
-```bash
-DOCUSIGN_INTEGRATION_KEY=your_integration_key
-DOCUSIGN_SECRET_KEY=your_secret_key
-DOCUSIGN_AUTH_SERVER=https://account-d.docusign.com
-DOCUSIGN_REDIRECT_URI=https://your-app.vercel.app/auth/callback
-# Note: BASE_URL should be empty in production (Vercel sets VERCEL_URL automatically)
-```
-
-### Publishing to MCP Registry
-
-This server is published to the [MCP Registry](https://github.com/modelcontextprotocol/registry) for easy discovery. Publishing happens automatically via GitHub Actions when you create a version tag (e.g., `git tag v1.0.0 && git push origin --tags`) or can be triggered manually from the Actions tab. The server is configured in [server.json](server.json) as a remote server pointing to the live Vercel deployment.
-
-## Architecture
-
-- **Framework**: Vercel API routes deployed on Vercel
-- **Authentication**: OAuth 2.0 with PKCE for secure token exchange
-- **MCP Implementation**: Built with `@modelcontextprotocol/sdk`
-- **Docusign Integration**: Direct API calls to Docusign Navigator
-- **Token Management**: Secure validation and refresh handling
+- **OAuth 2.0 Authentication**: Industry-standard secure authentication
+- **No Data Storage**: Your agreements are never stored on our servers
+- **Direct API Access**: Real-time connection to your Docusign account
+- **Revocable Access**: Disconnect anytime through your Docusign settings
 
 ## Troubleshooting
 
-### Common Issues
+### Can't Connect?
 
-**Authentication Failures**
+1. Verify your Docusign account has Navigator access
+2. Check that you completed the OAuth authorization
+3. Try the "Check authentication status" command
+4. Ensure your AI client supports MCP HTTP transport
 
-- Verify Docusign credentials in environment variables
-- Check OAuth redirect URI configuration
-- Ensure Docusign Navigator is enabled for your account
+### No Agreements Showing?
 
-**Connection Problems**
+1. Confirm you have agreements in Docusign Navigator
+2. Check that Navigator is enabled for your account
+3. Try authenticating again
 
-- Verify server URL is correct
-- Check network connectivity
-- Ensure MCP client supports HTTP transport
+### Still Need Help?
 
-**No Data Returned**
+- [Report an Issue](https://github.com/thisdot/docusign-navigator-mcp/issues)
+- [Learn About MCP](https://modelcontextprotocol.io/)
 
-- Confirm Docusign Navigator access
-- Check token validity with `auth_status` tool
-- Verify agreement data exists in Docusign Navigator
+## Contributing
 
-### Support
-
-- **Issues**: [GitHub Issues](https://github.com/thisdot/docusign-navigator-mcp/issues)
-- **Documentation**: [Model Context Protocol](https://modelcontextprotocol.io/)
+Want to contribute or run your own instance? See our [Contributing Guide](CONTRIBUTING.md) for development setup, architecture details, and deployment instructions.
