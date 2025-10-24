@@ -1,5 +1,5 @@
 /**
- * Streamlined OAuth Configuration for DocuSign Navigator MCP Server
+ * Streamlined OAuth Configuration for Docusign Navigator MCP Server
  * Replaces the bloated 226-line configuration with focused, practical settings
  */
 
@@ -42,7 +42,7 @@ interface OAuthConfig {
 
 // Streamlined configuration - easy to switch providers
 const oauthConfig: OAuthConfig = {
-  // DocuSign OAuth provider configuration
+  // Docusign OAuth provider configuration
   oauth_integration: {
     auth_server: {
       base_url: 'https://account-d.docusign.com',

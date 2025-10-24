@@ -69,15 +69,15 @@ export const config: AppConfig = {
  * @throws Error if configuration is invalid
  */
 export function validateConfig(): void {
-  // Validate required DocuSign settings
+  // Validate required Docusign settings
   if (!config.docusign.clientId) {
-    throw new Error('DocuSign Client ID is required');
+    throw new Error('Docusign Client ID is required');
   }
   if (!config.docusign.clientSecret) {
-    throw new Error('DocuSign Client Secret is required');
+    throw new Error('Docusign Client Secret is required');
   }
   if (!config.docusign.redirectUri) {
-    throw new Error('DocuSign Redirect URI is required');
+    throw new Error('Docusign Redirect URI is required');
   }
 
   // Validate numeric values

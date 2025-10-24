@@ -253,7 +253,7 @@ function handleAuthorizationError(
 }
 
 /**
- * Builds DocuSign authorization URL
+ * Builds Docusign authorization URL
  */
 function buildDocuSignAuthUrl(
   authRequest: AuthorizationRequest,
@@ -328,7 +328,7 @@ export async function GET(request: Request): Promise<Response> {
     const encodedState = encodeStateParameter(mcpClientInfo);
     const docusignAuthUrl = buildDocuSignAuthUrl(authRequest, encodedState);
 
-    // Redirect to DocuSign for authorization
+    // Redirect to Docusign for authorization
     return createOAuthRedirectResponse(docusignAuthUrl);
   } catch (error) {
     // Log error internally but don't expose details to client

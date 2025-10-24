@@ -21,7 +21,7 @@ export const authStatusHandler: ToolHandler = async (
   try {
     const accessToken = extractAccessToken(context, 'auth_status');
 
-    // Validate the token and get user information from DocuSign
+    // Validate the token and get user information from Docusign
     const validationResult = await validateDocuSignToken(accessToken);
 
     if (!validationResult.isValid) {

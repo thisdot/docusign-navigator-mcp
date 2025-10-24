@@ -2,7 +2,7 @@ import { validateDocuSignToken } from '../docusign-service.js';
 import { logger } from '../logger.js';
 import type { AuthInfo } from './types.js';
 
-// Token validation with DocuSign - validates tokens proactively
+// Token validation with Docusign - validates tokens proactively
 export const createTokenVerifier =
   () =>
   async (req: Request, bearerToken?: string): Promise<AuthInfo | undefined> => {
@@ -11,7 +11,7 @@ export const createTokenVerifier =
     }
 
     try {
-      // Validate token with DocuSign before processing requests
+      // Validate token with Docusign before processing requests
       const validation = await validateDocuSignToken(bearerToken);
 
       if (!validation.isValid) {

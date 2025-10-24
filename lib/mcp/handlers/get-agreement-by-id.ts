@@ -35,7 +35,7 @@ export const getAgreementByIdHandler: ToolHandler<
     const agreement: Agreement = agreementData;
     const formatted = formatAgreementDetails(agreement);
 
-    const displayText = `DocuSign Navigator Agreement Details:
+    const displayText = `Docusign Navigator Agreement Details:
 
 Title: ${formatted.title}
 ID: ${formatted.id}

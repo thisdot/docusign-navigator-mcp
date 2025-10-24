@@ -27,7 +27,7 @@ export type ToolHandler<T = Record<string, unknown>> = (
   context: ToolContext
 ) => Promise<MCPToolResponse>;
 
-// DocuSign user info types
+// Docusign user info types
 export interface DocuSignAccount {
   account_id: string;
   account_name: string;
@@ -48,7 +48,7 @@ export interface TokenValidationResult {
   userInfo?: DocuSignUserInfo;
 }
 
-// DocuSign Navigator Agreement types
+// Docusign Navigator Agreement types
 export interface AgreementParty {
   preferred_name?: string;
   name_in_agreement?: string;

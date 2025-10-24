@@ -27,7 +27,7 @@ export const getAgreementsHandler: ToolHandler = async (
     const agreements = agreementsData.data || [];
 
     // Format the response using the standardized formatter
-    const displayText = `Found ${agreements.length} DocuSign Navigator agreement${
+    const displayText = `Found ${agreements.length} Docusign Navigator agreement${
       agreements.length !== 1 ? 's' : ''
     }${
       agreements.length > 0

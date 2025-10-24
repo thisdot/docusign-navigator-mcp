@@ -20,9 +20,9 @@ import oauthConfig from '../../lib/oauth-config.js';
  * 3. Vercel routing compatibility (serves oauth-protected-resource.ts, not .well-known files)
  *
  * NON-SPEC IMPLEMENTATION:
- * ⚠️  CUSTOM: Scopes are DocuSign-specific, not generic MCP scopes
+ * ⚠️  CUSTOM: Scopes are Docusign-specific, not generic MCP scopes
  * ⚠️  CUSTOM: Includes 'resource_documentation' field (not part of RFC9728 but useful)
- * ⚠️  PROXY: This represents a proxy to DocuSign, not a native MCP resource server
+ * ⚠️  PROXY: This represents a proxy to Docusign, not a native MCP resource server
  */
 
 export async function GET(request: Request) {

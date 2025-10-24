@@ -1,5 +1,5 @@
 // ==========================================
-// DocuSign Authentication & API Service
+// Docusign Authentication & API Service
 // ==========================================
 
 import { logger } from './logger.js';
@@ -16,7 +16,7 @@ export class AppError extends Error {
 }
 
 // ==========================================
-// DocuSign User Info Utility
+// Docusign User Info Utility
 // ==========================================
 
 /**
@@ -38,7 +38,7 @@ async function fetchUserAccountId(accessToken: string): Promise<string> {
         const errorData = JSON.parse(errorText);
         if (errorData.error === 'internal_server_error') {
           errorMessage =
-            'Access token has expired or is invalid. Please re-authenticate with DocuSign.';
+            'Access token has expired or is invalid. Please re-authenticate with Docusign.';
         } else if (errorData.error) {
           errorMessage = `Authentication failed: ${errorData.error}`;
         }
@@ -61,18 +61,18 @@ async function fetchUserAccountId(accessToken: string): Promise<string> {
     !Array.isArray(userInfo.accounts) ||
     userInfo.accounts.length === 0
   ) {
-    throw new AppError('No DocuSign accounts found for user', 404);
+    throw new AppError('No Docusign accounts found for user', 404);
   }
 
   return userInfo.accounts[0].account_id;
 }
 
 // ==========================================
-// Generic DocuSign API Request Wrapper
+// Generic Docusign API Request Wrapper
 // ==========================================
 
 /**
- * Generic wrapper for DocuSign Navigator API requests
+ * Generic wrapper for Docusign Navigator API requests
  * Consolidates common patterns and error handling
  */
 async function makeDocuSignAPIRequest(
@@ -101,7 +101,7 @@ async function makeDocuSignAPIRequest(
     // Log meaningful API errors for debugging
     if (response.status >= 500) {
       logger.error(
-        'DocuSign Navigator API error',
+        'Docusign Navigator API error',
         {
           message: errorDetails || 'Unknown server error',
         },
@@ -119,7 +119,7 @@ async function makeDocuSignAPIRequest(
     }
     if (response.status === 403) {
       throw new AppError(
-        'Access denied - DocuSign Navigator may not be enabled for this account. To get access, please visit: https://developers.docusign.com/docs/navigator-api/',
+        'Access denied - Docusign Navigator may not be enabled for this account. To get access, please visit: https://developers.docusign.com/docs/navigator-api/',
         403
       );
     }
@@ -130,7 +130,7 @@ async function makeDocuSignAPIRequest(
         errorDetails.includes('not available')
       ) {
         throw new AppError(
-          'DocuSign Navigator API not found - may not be available for this account. To get access, please visit: https://developers.docusign.com/docs/navigator-api/',
+          'Docusign Navigator API not found - may not be available for this account. To get access, please visit: https://developers.docusign.com/docs/navigator-api/',
           404
         );
       } else {
@@ -153,7 +153,7 @@ async function makeDocuSignAPIRequest(
 }
 
 // ==========================================
-// DocuSign Authentication
+// Docusign Authentication
 // ==========================================
 
 export async function exchangeCodeForToken(
@@ -195,7 +195,7 @@ export async function exchangeCodeForToken(
     if (!res.ok) {
       const errorText = await res.text();
       logger.error(
-        'DocuSign token exchange failed',
+        'Docusign token exchange failed',
         {
           message: errorText || 'Unknown error',
         },
@@ -220,7 +220,7 @@ export async function exchangeCodeForToken(
 }
 
 // ==========================================
-// DocuSign User Validation
+// Docusign User Validation
 // ==========================================
 
 export async function validateDocuSignToken(accessToken: string): Promise<{
@@ -245,7 +245,7 @@ export async function validateDocuSignToken(accessToken: string): Promise<{
 
       // Only log meaningful authentication failures
       if (userInfoRes.status === 401) {
-        logger.warn('DocuSign token expired or invalid', {
+        logger.warn('Docusign token expired or invalid', {
           status: userInfoRes.status,
           context: 'token_validation',
         });
@@ -256,7 +256,7 @@ export async function validateDocuSignToken(accessToken: string): Promise<{
       }
 
       logger.error(
-        'DocuSign userinfo request failed',
+        'Docusign userinfo request failed',
         {
           message: errorText || 'Unknown error',
         },
@@ -268,7 +268,7 @@ export async function validateDocuSignToken(accessToken: string): Promise<{
 
       return {
         isValid: false,
-        error: 'Failed to validate token with DocuSign',
+        error: 'Failed to validate token with Docusign',
       };
     }
 
@@ -278,12 +278,12 @@ export async function validateDocuSignToken(accessToken: string): Promise<{
     logger.error('Token validation failed', error as Error, {
       context: 'docusign_auth',
     });
-    return { isValid: false, error: 'DocuSign service unavailable' };
+    return { isValid: false, error: 'Docusign service unavailable' };
   }
 }
 
 // ==========================================
-// DocuSign Navigator API Client
+// Docusign Navigator API Client
 // ==========================================
 
 export async function fetchAgreements(accessToken: string) {
@@ -305,7 +305,7 @@ export async function fetchAgreements(accessToken: string) {
     logger.error('Agreements fetch failed', error as Error, {
       api: 'agreements',
     });
-    throw new AppError('DocuSign Navigator service unavailable', 503);
+    throw new AppError('Docusign Navigator service unavailable', 503);
   }
 }
 
@@ -338,6 +338,6 @@ export async function fetchAgreementById(
       api: 'agreement_by_id',
       agreementId,
     });
-    throw new AppError('DocuSign Navigator service unavailable', 503);
+    throw new AppError('Docusign Navigator service unavailable', 503);
   }
 }

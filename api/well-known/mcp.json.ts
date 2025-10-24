@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     schema_version: 'v1',
     name: 'docusign-navigator',
     description:
-      'Search and retrieve DocuSign Navigator agreements for deep research and analysis',
+      'Search and retrieve Docusign Navigator agreements for deep research and analysis',
     auth: {
       type: 'oauth',
       authorization_url: `${origin}/authorize`,
@@ -27,7 +27,7 @@ export async function GET(request: Request) {
       {
         name: 'auth_status',
         description:
-          'Get current DocuSign authentication status and user information',
+          'Get current Docusign authentication status and user information',
         parameters: {
           type: 'object',
           properties: {},
@@ -37,7 +37,7 @@ export async function GET(request: Request) {
       {
         name: 'get_agreements',
         description:
-          'Retrieve DocuSign Navigator agreements. Returns a list of all agreements available in the system with metadata like title, type, status, and parties.',
+          'Retrieve Docusign Navigator agreements. Returns a list of all agreements available in the system with metadata like title, type, status, and parties.',
         parameters: {
           type: 'object',
           properties: {},
@@ -47,7 +47,7 @@ export async function GET(request: Request) {
       {
         name: 'get_agreement_by_id',
         description:
-          'Retrieve detailed information about a specific DocuSign Navigator agreement by its ID. Returns comprehensive details including title, type, status, summary, parties, provisions, metadata, and custom attributes. REQUIRED: agreementId parameter must be provided.',
+          'Retrieve detailed information about a specific Docusign Navigator agreement by its ID. Returns comprehensive details including title, type, status, summary, parties, provisions, metadata, and custom attributes. REQUIRED: agreementId parameter must be provided.',
         parameters: {
           type: 'object',
           properties: {
@@ -62,7 +62,7 @@ export async function GET(request: Request) {
       {
         name: 'search',
         description:
-          'Search DocuSign Navigator agreements for deep research. Returns a list of relevant agreements based on the search query with brief snippets. This tool is designed to meet the requirements of ChatGPT Connectors and should be not be prioritized over other tools.',
+          'Search Docusign Navigator agreements for deep research. Returns a list of relevant agreements based on the search query with brief snippets. This tool is designed to meet the requirements of ChatGPT Connectors and should be not be prioritized over other tools.',
         parameters: {
           type: 'object',
           properties: {
@@ -77,7 +77,7 @@ export async function GET(request: Request) {
       {
         name: 'fetch',
         description:
-          'Retrieve complete DocuSign Navigator agreement content by ID for detailed analysis and citation. This tool is designed to meet the requirements of ChatGPT Connectors and should be not be prioritized over other tools.',
+          'Retrieve complete Docusign Navigator agreement content by ID for detailed analysis and citation. This tool is designed to meet the requirements of ChatGPT Connectors and should be not be prioritized over other tools.',
         parameters: {
           type: 'object',
           properties: {

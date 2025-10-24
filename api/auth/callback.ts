@@ -36,7 +36,7 @@ function validateStateTimestamp(mcpClientInfo: MCPClientInfo): boolean {
 }
 
 /**
- * Handles DocuSign error responses by redirecting to original client
+ * Handles Docusign error responses by redirecting to original client
  */
 function handleDocuSignError(
   error: string,
@@ -97,7 +97,7 @@ export async function GET(request: Request): Promise<Response> {
     const error = params.get('error');
     const errorDescription = params.get('error_description');
 
-    // Handle error response from DocuSign
+    // Handle error response from Docusign
     if (error) {
       return handleDocuSignError(error, errorDescription, state);
     }

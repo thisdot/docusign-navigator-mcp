@@ -12,10 +12,10 @@ import { createTokenVerifier } from '../lib/mcp/auth.js';
 // Create the base MCP handler with both authenticated and non-authenticated tools
 const handler = createMcpHandler(
   server => {
-    // Authentication status tool that provides minimal DocuSign user information
+    // Authentication status tool that provides minimal Docusign user information
     server.tool(
       'auth_status',
-      'Get current DocuSign authentication status and user information',
+      'Get current Docusign authentication status and user information',
       {}, // No input parameters needed
       authStatusHandler
     );
@@ -23,7 +23,7 @@ const handler = createMcpHandler(
     // Get agreements tool that requires authentication
     server.tool(
       'get_agreements',
-      'Retrieve DocuSign Navigator agreements. Returns a list of all agreements available in the system with metadata like title, type, status, and parties.',
+      'Retrieve Docusign Navigator agreements. Returns a list of all agreements available in the system with metadata like title, type, status, and parties.',
       {}, // No input parameters needed
       getAgreementsHandler
     );
@@ -31,7 +31,7 @@ const handler = createMcpHandler(
     // Get agreement by ID tool that requires authentication
     server.tool(
       'get_agreement_by_id',
-      'Retrieve detailed information about a specific DocuSign Navigator agreement by its ID. Returns comprehensive details including title, type, status, summary, parties, provisions, metadata, and custom attributes. REQUIRED: agreementId parameter must be provided.',
+      'Retrieve detailed information about a specific Docusign Navigator agreement by its ID. Returns comprehensive details including title, type, status, summary, parties, provisions, metadata, and custom attributes. REQUIRED: agreementId parameter must be provided.',
       { agreementId: z.string().min(1, 'Agreement ID is required') },
       getAgreementByIdHandler
     );
@@ -39,7 +39,7 @@ const handler = createMcpHandler(
     // ChatGPT-compatible search tool for deep research
     server.tool(
       'search',
-      'Search DocuSign Navigator agreements for deep research. Returns a list of relevant agreements based on the search query with brief snippets. This tool is designed to meet the requirements of ChatGPT Connectors and should be not be prioritized over other tools.',
+      'Search Docusign Navigator agreements for deep research. Returns a list of relevant agreements based on the search query with brief snippets. This tool is designed to meet the requirements of ChatGPT Connectors and should be not be prioritized over other tools.',
       { query: z.string().min(1, 'Search query is required') },
       searchHandler
     );
@@ -47,7 +47,7 @@ const handler = createMcpHandler(
     // ChatGPT-compatible fetch tool for deep research
     server.tool(
       'fetch',
-      'Retrieve complete DocuSign Navigator agreement content by ID for detailed analysis and citation. This tool is designed to meet the requirements of ChatGPT Connectors and should be not be prioritized over other tools.',
+      'Retrieve complete Docusign Navigator agreement content by ID for detailed analysis and citation. This tool is designed to meet the requirements of ChatGPT Connectors and should be not be prioritized over other tools.',
       { id: z.string().min(1, 'Agreement ID is required') },
       fetchHandler
     );

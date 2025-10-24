@@ -31,7 +31,7 @@ function createTokenErrorResponse(
 }
 
 /**
- * Builds DocuSign token request parameters
+ * Builds Docusign token request parameters
  */
 function buildTokenRequestParams(
   grantType: string,
@@ -53,7 +53,7 @@ function buildTokenRequestParams(
 }
 
 /**
- * Makes token request to DocuSign
+ * Makes token request to Docusign
  */
 async function requestDocuSignToken(
   docusignParams: URLSearchParams
@@ -72,7 +72,7 @@ async function requestDocuSignToken(
 }
 
 /**
- * Processes DocuSign token response
+ * Processes Docusign token response
  */
 function processTokenResponse(
   data: Record<string, unknown>,
@@ -115,10 +115,10 @@ export async function POST(request: Request): Promise<Response> {
       );
     }
 
-    // Build DocuSign token request parameters
+    // Build Docusign token request parameters
     const docusignParams = buildTokenRequestParams(grantType, params);
 
-    // Make token request to DocuSign
+    // Make token request to Docusign
     const response = await requestDocuSignToken(docusignParams);
     const data = await response.json();
 

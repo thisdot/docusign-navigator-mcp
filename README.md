@@ -1,14 +1,14 @@
-# DocuSign Navigator MCP Server
+# Docusign Navigator MCP Server
 
-A Model Context Protocol (MCP) server that provides secure DocuSign Navigator integration for AI assistants. Connect your AI tools to access and analyze DocuSign agreement data using natural language queries.
+A Model Context Protocol (MCP) server that provides secure Docusign Navigator integration for AI assistants. Connect your AI tools to access and analyze Docusign agreement data using natural language queries.
 
 ## Features
 
-- **Secure OAuth 2.0 Authentication**: Complete DocuSign OAuth flow with PKCE support
-- **DocuSign Navigator Integration**: Access comprehensive agreement data and metadata
+- **Secure OAuth 2.0 Authentication**: Complete Docusign OAuth flow with PKCE support
+- **Docusign Navigator Integration**: Access comprehensive agreement data and metadata
 - **Natural Language Queries**: Search and retrieve agreements using conversational AI
 - **MCP Protocol Compliance**: Full compatibility with Model Context Protocol standards
-- **Real-time Data Access**: Live connection to DocuSign Navigator for up-to-date information
+- **Real-time Data Access**: Live connection to Docusign Navigator for up-to-date information
 
 ## Routes
 
@@ -56,27 +56,27 @@ Add to your MCP client configuration:
 ### Setup Steps
 
 1. **Add Server**: Configure the MCP server URL in your AI client
-2. **Authenticate**: Complete OAuth flow when prompted to connect your DocuSign account
-3. **Start Querying**: Use natural language to interact with your DocuSign data
+2. **Authenticate**: Complete OAuth flow when prompted to connect your Docusign account
+3. **Start Querying**: Use natural language to interact with your Docusign data
 
 ## Available Tools
 
 ### `auth_status`
 
-Check your DocuSign authentication status and user information.
+Check your Docusign authentication status and user information.
 
 **Example queries:**
 
-- "Check my DocuSign authentication status"
-- "Am I connected to DocuSign?"
+- "Check my Docusign authentication status"
+- "Am I connected to Docusign?"
 
 ### `get_agreements`
 
-Retrieve all DocuSign Navigator agreements with comprehensive metadata.
+Retrieve all Docusign Navigator agreements with comprehensive metadata.
 
 **Example queries:**
 
-- "Show me my DocuSign agreements"
+- "Show me my Docusign agreements"
 - "List all my contracts"
 - "What agreements do I have?"
 
@@ -92,7 +92,7 @@ Get detailed information about a specific agreement by ID.
 
 ### `search`
 
-Search DocuSign Navigator agreements for deep research. Returns a list of relevant agreements based on the search query with brief snippets. This tool was developed for ChatGPT Connectors and should not be prioritized over other tools.
+Search Docusign Navigator agreements for deep research. Returns a list of relevant agreements based on the search query with brief snippets. This tool was developed for ChatGPT Connectors and should not be prioritized over other tools.
 
 **Example queries:**
 
@@ -102,7 +102,7 @@ Search DocuSign Navigator agreements for deep research. Returns a list of releva
 
 ### `fetch`
 
-Retrieve complete DocuSign Navigator agreement content by ID for detailed analysis and citation. This tool was developed for ChatGPT Connectors and should not be prioritized over other tools.
+Retrieve complete Docusign Navigator agreement content by ID for detailed analysis and citation. This tool was developed for ChatGPT Connectors and should not be prioritized over other tools.
 
 **Example queries:**
 
@@ -150,7 +150,7 @@ Add to your Claude Desktop configuration:
 ## Usage Examples
 
 ```
-User: "Show me my DocuSign agreements"
+User: "Show me my Docusign agreements"
 AI: "You have 3 agreements: Contract A (pending), Contract B (completed), Contract C (in review)"
 
 User: "Tell me about Contract A"
@@ -162,7 +162,7 @@ AI: "Found 2 agreements with XYZ Corp: Service Agreement (active) and NDA (compl
 
 ## Requirements
 
-- **DocuSign Account**: Active DocuSign account with Navigator access
+- **Docusign Account**: Active Docusign account with Navigator access
 - **MCP Client**: Compatible AI client that supports Model Context Protocol
 - **Internet Connection**: Required for OAuth authentication and API calls
 
@@ -171,7 +171,7 @@ AI: "Found 2 agreements with XYZ Corp: Service Agreement (active) and NDA (compl
 - **OAuth 2.0**: Secure authentication with PKCE support
 - **Token Management**: Secure handling of access tokens
 - **No Data Storage**: No agreement data is stored on our servers
-- **Real-time Access**: Direct API calls to DocuSign Navigator
+- **Real-time Access**: Direct API calls to Docusign Navigator
 
 ## Development
 
@@ -179,7 +179,7 @@ AI: "Found 2 agreements with XYZ Corp: Service Agreement (active) and NDA (compl
 
 - Node.js 22+
 - npm or yarn
-- DocuSign Developer Account
+- Docusign Developer Account
 - Vercel CLI (for deployment)
 
 ### Environment Setup
@@ -203,7 +203,7 @@ npm install
 cp .env.example .env
 ```
 
-4. Update `.env` with your DocuSign credentials:
+4. Update `.env` with your Docusign credentials:
 
 ```bash
 DOCUSIGN_INTEGRATION_KEY=your_integration_key
@@ -213,10 +213,10 @@ DOCUSIGN_REDIRECT_URI=http://localhost:3000/auth/callback
 BASE_URL=http://localhost:3000
 ```
 
-### DocuSign Application Setup
+### Docusign Application Setup
 
-1. Create a DocuSign Developer account at [developers.docusign.com](https://developers.docusign.com/)
-2. Create a new application in the DocuSign Admin panel
+1. Create a Docusign Developer account at [developers.docusign.com](https://developers.docusign.com/)
+2. Create a new application in the Docusign Admin panel
 3. Configure OAuth redirect URIs:
    - Development: `http://localhost:3000/auth/callback`
    - Production: `https://your-domain.vercel.app/auth/callback`
@@ -254,7 +254,7 @@ The server will be available at `http://localhost:3000/mcp`
    - `DOCUSIGN_AUTH_SERVER`
    - `DOCUSIGN_REDIRECT_URI` (update to your Vercel URL)
 3. Deploy the application
-4. Update DocuSign app redirect URIs to include your Vercel URL
+4. Update Docusign app redirect URIs to include your Vercel URL
 
 #### Environment Variables for Production
 
@@ -275,7 +275,7 @@ This server is published to the [MCP Registry](https://github.com/modelcontextpr
 - **Framework**: Vercel API routes deployed on Vercel
 - **Authentication**: OAuth 2.0 with PKCE for secure token exchange
 - **MCP Implementation**: Built with `@modelcontextprotocol/sdk`
-- **DocuSign Integration**: Direct API calls to DocuSign Navigator
+- **Docusign Integration**: Direct API calls to Docusign Navigator
 - **Token Management**: Secure validation and refresh handling
 
 ## Troubleshooting
@@ -284,9 +284,9 @@ This server is published to the [MCP Registry](https://github.com/modelcontextpr
 
 **Authentication Failures**
 
-- Verify DocuSign credentials in environment variables
+- Verify Docusign credentials in environment variables
 - Check OAuth redirect URI configuration
-- Ensure DocuSign Navigator is enabled for your account
+- Ensure Docusign Navigator is enabled for your account
 
 **Connection Problems**
 
@@ -296,9 +296,9 @@ This server is published to the [MCP Registry](https://github.com/modelcontextpr
 
 **No Data Returned**
 
-- Confirm DocuSign Navigator access
+- Confirm Docusign Navigator access
 - Check token validity with `auth_status` tool
-- Verify agreement data exists in DocuSign Navigator
+- Verify agreement data exists in Docusign Navigator
 
 ### Support
 
