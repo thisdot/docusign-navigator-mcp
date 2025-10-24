@@ -1,7 +1,7 @@
 # Docusign Navigator MCP Server
 
 <div align="center">
-  <img src="docs/images/thisdot-labs-logo.png" alt="This Dot Labs" width="200"/>
+  <img src="public/thisdot-labs-logo.png" alt="This Dot Labs" width="200"/>
 
 **By This Dot Labs**
 
