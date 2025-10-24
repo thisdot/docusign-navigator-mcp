@@ -7,7 +7,6 @@ on:
   workflow_dispatch:
 
 permissions:
-  id-token: write
   contents: read
 
 jobs:
@@ -45,7 +44,9 @@ jobs:
           chmod +x mcp-publisher
 
       - name: Login to MCP Registry
-        run: ./mcp-publisher login github-oidc
+        env:
+          MCP_PRIVATE_KEY: ${{ secrets.MCP_PRIVATE_KEY }}
+        run: ./mcp-publisher login dns --domain thisdot.co --private-key "$MCP_PRIVATE_KEY"
 
       - name: Publish to MCP Registry
         run: ./mcp-publisher publish
