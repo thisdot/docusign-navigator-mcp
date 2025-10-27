@@ -36,6 +36,7 @@
     "Vercel"
   ],
   "author": "This Dot Labs",
+  "license": "MIT",
   "engines": {
     "node": ">=22.0.0"
   },
