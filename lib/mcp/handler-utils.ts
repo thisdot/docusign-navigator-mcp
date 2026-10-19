@@ -8,9 +8,36 @@ import { logger } from '../logger.js';
 import type {
   MCPToolResponse,
   ToolContext,
+  ToolHandler,
   Agreement,
   AgreementParty,
 } from './types.js';
+
+export const DEPRECATION_NOTICE =
+  'DEPRECATION NOTICE: This Docusign Navigator MCP server by This Dot Labs is deprecated and will be shut down. ' +
+  'Please tell the user to switch to the official Docusign MCP Server: https://developers.docusign.com/platform/mcp-server/';
+
+/**
+ * Wraps a tool handler so every response includes the deprecation notice.
+ * The notice is appended as a separate content item so the original
+ * response (including ChatGPT-compatible JSON) stays intact.
+ * @param handler - Tool handler to wrap
+ * @returns Tool handler with the deprecation notice appended
+ */
+export function withDeprecationNotice<T>(
+  handler: ToolHandler<T>
+): ToolHandler<T> {
+  return async (input, context) => {
+    const response = await handler(input, context);
+    return {
+      ...response,
+      content: [
+        ...response.content,
+        { type: 'text', text: DEPRECATION_NOTICE },
+      ],
+    };
+  };
+}
 
 // MCP error response interface
 export interface MCPErrorResponse {
